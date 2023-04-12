@@ -38,26 +38,27 @@
             this.comboBoxExamplesFont = new System.Windows.Forms.ComboBox();
             this.labelExamplesFont = new System.Windows.Forms.Label();
             this.labelSize = new System.Windows.Forms.Label();
-            this.buttonEarly = new System.Windows.Forms.Button();
+            this.buttonRestore = new System.Windows.Forms.Button();
             this.labelExamplaseSize = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownMainFont = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownExamplesFont = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownExamples = new System.Windows.Forms.NumericUpDown();
             this.labelBackGround = new System.Windows.Forms.Label();
             this.comboBoxImages = new System.Windows.Forms.ComboBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.labelSizeImage = new System.Windows.Forms.Label();
             this.radioButtonYes = new System.Windows.Forms.RadioButton();
             this.radioButtonNo = new System.Windows.Forms.RadioButton();
-            this.numericUpDownNotesSize = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownNotesFont = new System.Windows.Forms.NumericUpDown();
             this.labelNotesSize = new System.Windows.Forms.Label();
             this.comboBoxNotesFont = new System.Windows.Forms.ComboBox();
             this.labelNotesFont = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            this.buttonSave = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMainFont)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamplesFont)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesFont)).BeginInit();
             this.SuspendLayout();
             // 
             // labelNumOfExamples
@@ -142,16 +143,16 @@
             this.labelSize.Text = "Размер";
             this.labelSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // buttonEarly
+            // buttonRestore
             // 
-            this.buttonEarly.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonEarly.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonEarly.Location = new System.Drawing.Point(12, 339);
-            this.buttonEarly.Name = "buttonEarly";
-            this.buttonEarly.Size = new System.Drawing.Size(243, 98);
-            this.buttonEarly.TabIndex = 6;
-            this.buttonEarly.Text = "Восстановить значения по-умолчанию";
-            this.buttonEarly.UseVisualStyleBackColor = false;
+            this.buttonRestore.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonRestore.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRestore.Location = new System.Drawing.Point(12, 339);
+            this.buttonRestore.Name = "buttonRestore";
+            this.buttonRestore.Size = new System.Drawing.Size(189, 98);
+            this.buttonRestore.TabIndex = 6;
+            this.buttonRestore.Text = "Восстановить значения по умолчанию";
+            this.buttonRestore.UseVisualStyleBackColor = false;
             // 
             // labelExamplaseSize
             // 
@@ -164,73 +165,73 @@
             this.labelExamplaseSize.Text = "Размер";
             this.labelExamplaseSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // numericUpDown1
+            // numericUpDownMainFont
             // 
-            this.numericUpDown1.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(274, 119);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDownMainFont.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownMainFont.Location = new System.Drawing.Point(274, 119);
+            this.numericUpDownMainFont.Maximum = new decimal(new int[] {
             24,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numericUpDownMainFont.Minimum = new decimal(new int[] {
             6,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(107, 30);
-            this.numericUpDown1.TabIndex = 8;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericUpDownMainFont.Name = "numericUpDownMainFont";
+            this.numericUpDownMainFont.Size = new System.Drawing.Size(107, 30);
+            this.numericUpDownMainFont.TabIndex = 8;
+            this.numericUpDownMainFont.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownMainFont.Value = new decimal(new int[] {
             12,
             0,
             0,
             0});
             // 
-            // numericUpDown2
+            // numericUpDownExamplesFont
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown2.Location = new System.Drawing.Point(274, 193);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.numericUpDownExamplesFont.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownExamplesFont.Location = new System.Drawing.Point(274, 193);
+            this.numericUpDownExamplesFont.Maximum = new decimal(new int[] {
             24,
             0,
             0,
             0});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.numericUpDownExamplesFont.Minimum = new decimal(new int[] {
             6,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(107, 30);
-            this.numericUpDown2.TabIndex = 9;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown2.Value = new decimal(new int[] {
+            this.numericUpDownExamplesFont.Name = "numericUpDownExamplesFont";
+            this.numericUpDownExamplesFont.Size = new System.Drawing.Size(107, 30);
+            this.numericUpDownExamplesFont.TabIndex = 9;
+            this.numericUpDownExamplesFont.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownExamplesFont.Value = new decimal(new int[] {
             12,
             0,
             0,
             0});
             // 
-            // numericUpDown3
+            // numericUpDownExamples
             // 
-            this.numericUpDown3.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown3.Location = new System.Drawing.Point(274, 9);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.numericUpDownExamples.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownExamples.Location = new System.Drawing.Point(274, 9);
+            this.numericUpDownExamples.Maximum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.numericUpDownExamples.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(107, 30);
-            this.numericUpDown3.TabIndex = 10;
-            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown3.Value = new decimal(new int[] {
+            this.numericUpDownExamples.Name = "numericUpDownExamples";
+            this.numericUpDownExamples.Size = new System.Drawing.Size(107, 30);
+            this.numericUpDownExamples.TabIndex = 10;
+            this.numericUpDownExamples.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownExamples.Value = new decimal(new int[] {
             10,
             0,
             0,
@@ -311,25 +312,25 @@
             this.radioButtonNo.Text = "Нет";
             this.radioButtonNo.UseVisualStyleBackColor = true;
             // 
-            // numericUpDownNotesSize
+            // numericUpDownNotesFont
             // 
-            this.numericUpDownNotesSize.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownNotesSize.Location = new System.Drawing.Point(274, 266);
-            this.numericUpDownNotesSize.Maximum = new decimal(new int[] {
+            this.numericUpDownNotesFont.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDownNotesFont.Location = new System.Drawing.Point(274, 266);
+            this.numericUpDownNotesFont.Maximum = new decimal(new int[] {
             24,
             0,
             0,
             0});
-            this.numericUpDownNotesSize.Minimum = new decimal(new int[] {
+            this.numericUpDownNotesFont.Minimum = new decimal(new int[] {
             6,
             0,
             0,
             0});
-            this.numericUpDownNotesSize.Name = "numericUpDownNotesSize";
-            this.numericUpDownNotesSize.Size = new System.Drawing.Size(107, 30);
-            this.numericUpDownNotesSize.TabIndex = 20;
-            this.numericUpDownNotesSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDownNotesSize.Value = new decimal(new int[] {
+            this.numericUpDownNotesFont.Name = "numericUpDownNotesFont";
+            this.numericUpDownNotesFont.Size = new System.Drawing.Size(107, 30);
+            this.numericUpDownNotesFont.TabIndex = 20;
+            this.numericUpDownNotesFont.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numericUpDownNotesFont.Value = new decimal(new int[] {
             12,
             0,
             0,
@@ -376,6 +377,18 @@
             this.labelNotesFont.TabIndex = 17;
             this.labelNotesFont.Text = "Шрифт заметок:";
             // 
+            // buttonSave
+            // 
+            this.buttonSave.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonSave.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Location = new System.Drawing.Point(207, 339);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.buttonSave.Size = new System.Drawing.Size(174, 98);
+            this.buttonSave.TabIndex = 21;
+            this.buttonSave.Text = "Сохранить настройки";
+            this.buttonSave.UseVisualStyleBackColor = false;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -383,7 +396,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.numericUpDownNotesSize);
+            this.Controls.Add(this.buttonSave);
+            this.Controls.Add(this.numericUpDownNotesFont);
             this.Controls.Add(this.labelNotesSize);
             this.Controls.Add(this.comboBoxNotesFont);
             this.Controls.Add(this.labelNotesFont);
@@ -393,11 +407,11 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.comboBoxImages);
             this.Controls.Add(this.labelBackGround);
-            this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDownExamples);
+            this.Controls.Add(this.numericUpDownExamplesFont);
+            this.Controls.Add(this.numericUpDownMainFont);
             this.Controls.Add(this.labelExamplaseSize);
-            this.Controls.Add(this.buttonEarly);
+            this.Controls.Add(this.buttonRestore);
             this.Controls.Add(this.labelSize);
             this.Controls.Add(this.comboBoxExamplesFont);
             this.Controls.Add(this.labelExamplesFont);
@@ -407,13 +421,14 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "Настройки";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMainFont)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamplesFont)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamples)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesFont)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -427,20 +442,21 @@
         private System.Windows.Forms.ComboBox comboBoxExamplesFont;
         private System.Windows.Forms.Label labelExamplesFont;
         private System.Windows.Forms.Label labelSize;
-        private System.Windows.Forms.Button buttonEarly;
+        private System.Windows.Forms.Button buttonRestore;
         private System.Windows.Forms.Label labelExamplaseSize;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown numericUpDownMainFont;
+        private System.Windows.Forms.NumericUpDown numericUpDownExamplesFont;
+        private System.Windows.Forms.NumericUpDown numericUpDownExamples;
         private System.Windows.Forms.Label labelBackGround;
         private System.Windows.Forms.ComboBox comboBoxImages;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelSizeImage;
         private System.Windows.Forms.RadioButton radioButtonYes;
         private System.Windows.Forms.RadioButton radioButtonNo;
-        private System.Windows.Forms.NumericUpDown numericUpDownNotesSize;
+        private System.Windows.Forms.NumericUpDown numericUpDownNotesFont;
         private System.Windows.Forms.Label labelNotesSize;
         private System.Windows.Forms.ComboBox comboBoxNotesFont;
         private System.Windows.Forms.Label labelNotesFont;
+        private System.Windows.Forms.Button buttonSave;
     }
 }

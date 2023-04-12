@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace MathTrainer
 {
+    /// <summary>
+    /// Окно, в котором представлена информация касательно выпущенных изменений данного ПО
+    /// </summary>
     public partial class VersionForm : Form
     {
         public VersionForm()
@@ -10,17 +13,16 @@ namespace MathTrainer
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Изменить шрифт элементов управления окна
+        /// </summary>
+        /// <param name="font">Используемый шрифт</param>
         public void ChangeFont(Font font)
         {
-            labelMain.Font = font;
-
-            label100.Font = font;
-            label101.Font = font;
-            label102.Font = font;
-
-            textBox1.Font = font;
-            textBox2.Font = font;
-            textBox3.Font = font;
+            foreach (Control ctrl in Controls)
+            {
+                ctrl.Font = font;
+            }
         }
     }
 }

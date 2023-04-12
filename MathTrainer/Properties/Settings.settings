@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MathTrainer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="NumOfExamples" Type="System.Int32" Scope="User">
+    <Setting Name="ExamplesCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="CurrentFontSize" Type="System.Int32" Scope="User">
+    <Setting Name="MainFontSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">12</Value>
     </Setting>
-    <Setting Name="CurrentFontName" Type="System.String" Scope="User">
+    <Setting Name="MainFontName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Times New Roman</Value>
     </Setting>
     <Setting Name="NotesFontSize" Type="System.Int32" Scope="User">

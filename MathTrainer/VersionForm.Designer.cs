@@ -49,7 +49,7 @@
             this.labelMain.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelMain.Location = new System.Drawing.Point(267, 9);
             this.labelMain.Name = "labelMain";
-            this.labelMain.Size = new System.Drawing.Size(240, 30);
+            this.labelMain.Size = new System.Drawing.Size(219, 30);
             this.labelMain.TabIndex = 0;
             this.labelMain.Text = "Изменения в версиях";
             this.labelMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -74,7 +74,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(733, 847);
+            this.textBox1.Size = new System.Drawing.Size(712, 847);
             this.textBox1.TabIndex = 2;
             this.textBox1.TabStop = false;
             this.textBox1.Text = resources.GetString("textBox1.Text");
@@ -99,7 +99,7 @@
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(733, 753);
+            this.textBox2.Size = new System.Drawing.Size(712, 753);
             this.textBox2.TabIndex = 4;
             this.textBox2.TabStop = false;
             this.textBox2.Text = resources.GetString("textBox2.Text");
@@ -124,7 +124,7 @@
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(733, 1277);
+            this.textBox3.Size = new System.Drawing.Size(712, 1277);
             this.textBox3.TabIndex = 6;
             this.textBox3.TabStop = false;
             this.textBox3.Text = resources.GetString("textBox3.Text");

@@ -63,6 +63,8 @@
       <DependentUpon>FilterEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\FilterEventArgs.cs" />
+    <Compile Include="HelperClasses\NotesManager.cs" />
+    <Compile Include="HelperClasses\SettingsManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,11 +73,11 @@
     </Compile>
     <Compile Include="MainPresenter.cs" />
     <Compile Include="HelperClasses\Notes.cs" />
-    <Compile Include="NotesEdit.cs">
+    <Compile Include="NotesEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotesEdit.Designer.cs">
-      <DependentUpon>NotesEdit.cs</DependentUpon>
+    <Compile Include="NotesEditForm.Designer.cs">
+      <DependentUpon>NotesEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="NotesForm.cs">
       <SubType>Form</SubType>
@@ -91,7 +93,7 @@
     <Compile Include="QuestionForm.Designer.cs">
       <DependentUpon>QuestionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Serialization.cs" />
+    <Compile Include="HelperClasses\Settings.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,8 +115,8 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotesEdit.resx">
-      <DependentUpon>NotesEdit.cs</DependentUpon>
+    <EmbeddedResource Include="NotesEditForm.resx">
+      <DependentUpon>NotesEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NotesForm.resx">
       <DependentUpon>NotesForm.cs</DependentUpon>

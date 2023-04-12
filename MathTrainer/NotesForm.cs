@@ -2,189 +2,203 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Runtime.Serialization.Json;
-using System.IO;
 
 namespace MathTrainer
 {
+    /// <summary>
+    /// Окно, позволяющее просматривать заметки, созданные пользователем
+    /// </summary>
     public partial class NotesForm : Form
     {
-        public List<Notes> notes;
-        public static bool NotesEditWasCreated = false;
-        // Шрифт приложения и заметок
-        public Font currentFont;
-        public Font currentNotesFont;
+        /// <summary>
+        /// Индекс редактируемой заметки
+        /// </summary>
+        private int _editedNoteIndex = -1;
 
+        #region Публичные свойства
+        /// <summary>
+        /// Списиок текущих заметок
+        /// </summary>
+        public List<Note> CurrentNotes { get; set; }
+
+        /// <summary>
+        /// Индекс выбранной заметки
+        /// </summary>
+        public int SelectedNoteIndex => comboBoxNames.SelectedIndex;
+
+        /// <summary>
+        /// Было создано окно создания/изменения выбранной заметки
+        /// </summary>
+        public static bool NotesEditWasCreated = false;
+
+        #endregion
+        
         public NotesForm()
         {
             InitializeComponent();
-            notes = new List<Notes>();
-
-            buttonConfirm.Visible = false;
-
-            LoadNotes();    // Загрузка заметок
-            LoadConfig();   // Загрузка шрифтов
+            LoadNotes();
+            LoadAndApplySettings();
 
             toolTip1.SetToolTip(buttonAdd, "Добавить заметку");
             toolTip1.SetToolTip(buttonDelete, "Удалить заметку");
             toolTip1.SetToolTip(buttonEdit, "Редактировать заметку");
 
-            buttonAdd.Click += ButtonAdd_Click;
+            buttonAdd.Click += ButtonAddClick;
+            buttonEdit.Click += ButtonEditClick;
+            buttonDelete.Click += ButtonDeleteNoteClick;
 
-            buttonEdit.Click += ButtonEdit_Click;
-
-            buttonDelete.Click += ButtonDelete_Click;
-
-            buttonConfirm.Click += ButtonConfirm_Click;
-
-            labelNote.Click += LabelNote_Click;
-
-            comboBoxNames.SelectionChangeCommitted += ComboBoxNames_SelectionChangeCommitted;
+            comboBoxNames.SelectionChangeCommitted += NoteWasSelected;
         }
 
-        // Событие по выбору элемента в списке заметок
-        private void ComboBoxNames_SelectionChangeCommitted(object sender, EventArgs e)
+        #region Обработка событий
+
+        /// <summary>
+        /// Событие по выбору элемента в списке заметок
+        /// </summary>
+        private void NoteWasSelected(object sender, EventArgs e)
         {
-            if (buttonConfirm.Visible) buttonConfirm.Visible = false;
             UpdateCurrentText();
         }
 
-        // Событие по щелчку на текстовое поле
-        private void LabelNote_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Событие по нажатию кнопки "Удалить заметку"
+        /// </summary>
+        private void ButtonDeleteNoteClick(object sender, EventArgs e)
         {
-            if (buttonConfirm.Visible) buttonConfirm.Visible = false;
-        }
-
-        // Событие по подтверждению удаления заметки
-        private void ButtonConfirm_Click(object sender, EventArgs e)
-        {
-            int remouvingIndex = comboBoxNames.SelectedIndex;
-            notes.RemoveAt(remouvingIndex);
-            comboBoxNames.Items.RemoveAt(remouvingIndex);
-            if (remouvingIndex > 0) comboBoxNames.SelectedIndex = remouvingIndex - 1;
-
-            labelNote.Text = "";
-
-            buttonConfirm.Visible = false;
-
-            SaveNotes();
-        }
-
-        // Событие по нажатию кнопки удалить
-        private void ButtonDelete_Click(object sender, EventArgs e)
-        {
-            if (comboBoxNames.SelectedIndex >= 0) buttonConfirm.Visible = true;
-        }
-
-        // Событие по нажатию кнопки "Изменить"
-        private void ButtonEdit_Click(object sender, EventArgs e)
-        {
-            if (buttonConfirm.Visible) buttonConfirm.Visible = false;
-
-            if ((!NotesEditWasCreated) && (comboBoxNames.SelectedIndex >= 0))
+            if (comboBoxNames.SelectedIndex < 0)
             {
-                NotesEdit notesEdit = new NotesEdit(this, true);
-                notesEdit.Location = Location;
-                notesEdit.Text = "Изменение заметки";
-                notesEdit.Icon = new Icon("../Resource/Icons/Edit.ico");
-                notesEdit.FillText(comboBoxNames.SelectedIndex);
-                notesEdit.Show();
-                NotesEditWasCreated = true;
+                return;
+            }
+            
+            DialogResult dialogResult = MessageBox.Show("Удалить выбранную заметку?", "Подтвердите удаление заметки", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                int remouvingIndex = comboBoxNames.SelectedIndex;
+                CurrentNotes.RemoveAt(remouvingIndex);
+                comboBoxNames.Items.RemoveAt(remouvingIndex);
+
+                comboBoxNames.SelectedIndex = -1;
+                labelNote.Text = "";
+
+                SaveNotes();
             }
         }
 
-        // Событие по нажатию кнопки "Добавить"
-        private void ButtonAdd_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Событие по нажатию кнопки "Изменить заметку"
+        /// </summary>
+        private void ButtonEditClick(object sender, EventArgs e)
         {
-            if (buttonConfirm.Visible) buttonConfirm.Visible = false;
+            if (!NotesEditWasCreated && SelectedNoteIndex >= 0)
+            {
+                _editedNoteIndex = SelectedNoteIndex;
+                CreateNoteEditionForm(true);
+            }
+        }
 
+        /// <summary>
+        /// Событие по нажатию кнопки "Добавить заметку"
+        /// </summary>
+        private void ButtonAddClick(object sender, EventArgs e)
+        {
             if (!NotesEditWasCreated)
             {
-                NotesEdit notesEdit = new NotesEdit(this, false);
-                notesEdit.Location = Location;
-                notesEdit.Show();
-                NotesEditWasCreated = true;
+                CreateNoteEditionForm(false);
             }
         }
+        #endregion
 
-        // Обновление списка заметок после добавления новой
-        public void UpdateBoxOfNames(Notes _notes)
+        #region Основные методы
+
+        /// <summary>
+        /// Добавить новую заметку
+        /// </summary>
+        /// <param name="newNote">Новая заметка</param>
+        public void AddNewNote(Note newNote)
         {
-            comboBoxNames.Items.Add(_notes.Name);
+            CurrentNotes.Add(newNote);
+            comboBoxNames.Items.Add(newNote.Name);
             SaveNotes();
         }
 
-        // Обновление текушей заметки
-        public void UpdateCurrentNote(Notes _notes)
+        /// <summary>
+        /// Обновление ранее выбранной заметки
+        /// </summary>
+        /// <param name="updatedNote">Обновлённая заметка</param>
+        public void UpdateCurrentNote(Note updatedNote)
         {
-            notes[comboBoxNames.SelectedIndex].Name = _notes.Name;
+            comboBoxNames.Items[_editedNoteIndex] = updatedNote.Name;
+            CurrentNotes[_editedNoteIndex].Name = updatedNote.Name;
+            CurrentNotes[_editedNoteIndex].Text = updatedNote.Text;
 
-            notes[comboBoxNames.SelectedIndex].Note = _notes.Note;
-            
-            comboBoxNames.Items[comboBoxNames.SelectedIndex] = _notes.Name;
             UpdateCurrentText();
-
             SaveNotes();
         }
 
-        // Записать заметки в файл сохранения
-        public void SaveNotes()
+        #endregion
+
+        #region Вспомогательные методы
+
+        /// <summary>
+        /// Загрузить заметки из файла
+        /// </summary>
+        private void LoadNotes()
         {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Notes>));
-            using (FileStream fs = new FileStream("../Resource/notes.json", FileMode.Create))
+            CurrentNotes = NotesManager.LoadNotes();
+
+            for (int i = 0; i < CurrentNotes.Count; i++)
             {
-                jsonFormatter.WriteObject(fs, notes);
-            }
-
-        }
-
-        // Загрузить заметки из файла
-        public void LoadNotes()
-        {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Notes>));
-
-            using (FileStream fs = new FileStream("../Resource/notes.json", FileMode.Open))
-            {
-                notes = (List<Notes>)jsonFormatter.ReadObject(fs);
-            }
-
-            for (int i=0; i<notes.Count; i++)
-            {
-                comboBoxNames.Items.Add(notes[i].Name);
+                comboBoxNames.Items.Add(CurrentNotes[i].Name);
             }
         }
 
-        // Обновить текст заметки
+        /// <summary>
+        /// Сохранить заметки в файл
+        /// </summary>
+        private void SaveNotes()
+        {
+            NotesManager.SaveNotes(CurrentNotes);
+        }
+
+        /// <summary>
+        /// Создать окно создания/редкатирования заметки
+        /// </summary>
+        /// <param name="isEditingForm">Является ли окно редактором, или конструктором
+        /// <para><b>true</b> - создаётся окно редактирования существующей заметки</para>
+        /// <para><b>false</b> - создаётся окно создания новой заметки</para></param>
+        private void CreateNoteEditionForm(bool isEditingForm)
+        {
+            var notesEdit = new NotesEditForm(this, isEditingForm);
+            notesEdit.Location = Location;
+            notesEdit.Show();
+            NotesEditWasCreated = true;
+        }
+
+        /// <summary>
+        /// Обновить текст заметки
+        /// </summary>
         private void UpdateCurrentText()
         {
-            labelNote.Text = "";
-            labelNote.Text = notes[comboBoxNames.SelectedIndex].Note;
+            int selectedNodeId = comboBoxNames.SelectedIndex;
+            labelNote.Text = CurrentNotes[selectedNodeId].Text;
         }
 
-        // Загрузка конфигурации
-        private void LoadConfig()
+        /// <summary>
+        /// Загрузить и применить настройки
+        /// </summary>
+        private void LoadAndApplySettings()
         {
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Settings));
-
-            Settings settings = new Settings(); 
-            
-            using (FileStream fs = new FileStream("../Resource/settings.json", FileMode.Open))
-            {
-                settings = (Settings)jsonFormatter.ReadObject(fs);
-            }
-
-            // Создание основного шрифта
-            string _currentFont = settings.CurrentFontName;
-            currentFont = new Font(_currentFont, settings.FontSize);
+            Settings settings = SettingsManager.LoadSettings();
+            var currentFont = new Font(settings.MainFontName, settings.MainFontSize);
+            var currentNotesFont = new Font(settings.NotesFontName, settings.NotesFontSize);
 
             // Устанавливаем элементам управления основной шрифт
             labelNames.Font = currentFont;
             comboBoxNames.Font = currentFont;
-            buttonConfirm.Font = currentFont;
-
-            currentNotesFont = new Font(settings.CurrentNotesFontName, settings.NotesFontSize);
-
+            // А для заметок отдельный шрифт
             labelNote.Font = currentNotesFont;
-        }
+        } 
+        #endregion
     }
 }

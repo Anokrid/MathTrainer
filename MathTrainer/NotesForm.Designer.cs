@@ -38,7 +38,6 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
-            this.buttonConfirm = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.labelNote = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -102,18 +101,6 @@
             this.buttonEdit.TabIndex = 4;
             this.buttonEdit.UseVisualStyleBackColor = false;
             // 
-            // buttonConfirm
-            // 
-            this.buttonConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConfirm.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConfirm.Location = new System.Drawing.Point(263, 13);
-            this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(178, 79);
-            this.buttonConfirm.TabIndex = 7;
-            this.buttonConfirm.Text = "Подтвердить удаление заметки";
-            this.buttonConfirm.UseVisualStyleBackColor = true;
-            this.buttonConfirm.Visible = false;
-            // 
             // labelNote
             // 
             this.labelNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -137,7 +124,6 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(752, 453);
             this.Controls.Add(this.labelNote);
-            this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);
@@ -159,7 +145,6 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonEdit;
-        private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox labelNote;
     }

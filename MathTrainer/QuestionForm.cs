@@ -4,47 +4,70 @@ using System.Windows.Forms;
 
 namespace MathTrainer
 {
+    /// <summary>
+    /// Окно, в котором приведены подсказки по использованию программы
+    /// </summary>
     public partial class QuestionForm : Form
     {
-        private int Page = 1;
-        Image image;
+        /// <summary>
+        /// Количество доступных страниц в окне подсказок
+        /// </summary>
+        private const int PagesCount = 13;
+
+        /// <summary>
+        /// Индекс текущей страница окна, моет иметь значения от 1 до <see cref="PagesCount"/>
+        /// </summary>
+        private int _pageId = 1;
 
         public QuestionForm()
         {
             InitializeComponent();
-            buttonForward.Click += ButtonForward_Click;
-            buttonBack.Click += ButtonBack_Click;
+            buttonForward.Click += ButtonForwardClick;
+            buttonBack.Click += ButtonBackClick;
         }
 
-        private void ButtonBack_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Переместиться на прошлую страницу
+        /// </summary>
+        private void ButtonBackClick(object sender, EventArgs e)
         {
-            if (Page > 1)
+            if (_pageId > 1)
             {
-                Page -= 1;
+                _pageId--;
                 UpdatePage();
             }
         }
 
-        private void ButtonForward_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Переместиться на следующую страницу
+        /// </summary>
+        private void ButtonForwardClick(object sender, EventArgs e)
         {
-            if (Page < 13)
+            if (_pageId < PagesCount)
             {
-                Page += 1;
+                _pageId++;
                 UpdatePage();
             }
         }
 
+        /// <summary>
+        /// Обновить текущую страницу
+        /// </summary>
         private void UpdatePage()
         {
-            string txt = "Страница " + Page;
-            labelPage.Text = txt;
-            string imageName = "../Resource/Help/Help" + Page + ".png";
-            image = Image.FromFile(imageName);
-            pictureBox1.Image = image;
+            labelPage.Text = "Страница " + _pageId;
+            string imageName = "../Resource/Help/Help" + _pageId + ".png";
+            pictureBox1.Image = Image.FromFile(imageName);
+
+            /// Изображения занимают много памяти, и если их вовремя не очищать, то происходит раздувание памяти, занимаемой приложением, поэтому вызов уборщика мусора решает данную проблему
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Изменить шритф элементов управления
+        /// </summary>
+        /// <param name="fnt">Новый шрифт</param>
         public void ChangeFont(Font fnt)
         {
             buttonBack.Font = fnt;

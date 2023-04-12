@@ -79,7 +79,7 @@ namespace MathTrainer
         /// </summary>
         private void View_UseFilterChanged(object sender, EventArgs e)
         {
-            _problemsManager.UseFilters = _view.UsingFilters;
+            _problemsManager.UseFilters = _view.UseFilters;
         }
 
         /// <summary>

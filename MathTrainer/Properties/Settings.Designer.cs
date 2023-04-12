@@ -26,36 +26,36 @@ namespace MathTrainer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int NumOfExamples {
+        public int ExamplesCount {
             get {
-                return ((int)(this["NumOfExamples"]));
+                return ((int)(this["ExamplesCount"]));
             }
             set {
-                this["NumOfExamples"] = value;
+                this["ExamplesCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("12")]
-        public int CurrentFontSize {
+        public int MainFontSize {
             get {
-                return ((int)(this["CurrentFontSize"]));
+                return ((int)(this["MainFontSize"]));
             }
             set {
-                this["CurrentFontSize"] = value;
+                this["MainFontSize"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Times New Roman")]
-        public string CurrentFontName {
+        public string MainFontName {
             get {
-                return ((string)(this["CurrentFontName"]));
+                return ((string)(this["MainFontName"]));
             }
             set {
-                this["CurrentFontName"] = value;
+                this["MainFontName"] = value;
             }
         }
         

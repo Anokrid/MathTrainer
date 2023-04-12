@@ -112,7 +112,7 @@
             this.toolStripButtonAbout.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAbout.Image")));
             this.toolStripButtonAbout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAbout.Name = "toolStripButtonAbout";
-            this.toolStripButtonAbout.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonAbout.Size = new System.Drawing.Size(29, 24);
             this.toolStripButtonAbout.Text = "О приложении";
             // 
             // toolStripButtonHow
@@ -122,7 +122,7 @@
             this.toolStripButtonHow.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonHow.Image")));
             this.toolStripButtonHow.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonHow.Name = "toolStripButtonHow";
-            this.toolStripButtonHow.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonHow.Size = new System.Drawing.Size(29, 24);
             this.toolStripButtonHow.Text = "Как работать?";
             // 
             // toolStripButtonOptions
@@ -132,7 +132,7 @@
             this.toolStripButtonOptions.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonOptions.Image")));
             this.toolStripButtonOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonOptions.Name = "toolStripButtonOptions";
-            this.toolStripButtonOptions.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonOptions.Size = new System.Drawing.Size(29, 24);
             this.toolStripButtonOptions.Text = "Настройки";
             // 
             // toolStripButtonNotes
@@ -141,7 +141,7 @@
             this.toolStripButtonNotes.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonNotes.Image")));
             this.toolStripButtonNotes.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonNotes.Name = "toolStripButtonNotes";
-            this.toolStripButtonNotes.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonNotes.Size = new System.Drawing.Size(29, 24);
             this.toolStripButtonNotes.Text = "Заметки";
             // 
             // toolStripButtonVersion
@@ -151,7 +151,7 @@
             this.toolStripButtonVersion.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonVersion.Image")));
             this.toolStripButtonVersion.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonVersion.Name = "toolStripButtonVersion";
-            this.toolStripButtonVersion.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButtonVersion.Size = new System.Drawing.Size(29, 24);
             this.toolStripButtonVersion.Text = "Версия 1.0.2 b";
             // 
             // LabelM
@@ -472,6 +472,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Генератор примеров";
             this.toolStrip1.ResumeLayout(false);

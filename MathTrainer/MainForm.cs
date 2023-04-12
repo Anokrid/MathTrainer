@@ -2,55 +2,10 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Runtime.Serialization.Json;
-using System.IO;
 
 namespace MathTrainer
 {
-    /// <summary>
-    /// Интерфейс для взаимодействия с UI программы
-    /// </summary>
-    public interface IMainForm
-    {
-        // Текущая операция
-        int OperationId { get; }
-        // Числа
-        int GetM { get; }
-        int GetN { get; }
-        int CurrentFilterIndex { get; }
-
-        // Добавился новый фильтр
-        event EventHandler FilterWasAdded;
-        // Сменился выбранный фильтр
-        event EventHandler FilterWasChanged;
-        // Использовать/не использовать фильтр сменилось состояние
-        event EventHandler UseFilterChanged;
-        // Изменился имеющийся фильтр
-        event EventHandler<FilterEventArgs> FilterWasUpdated;
-        // Удалился имеющийся фильтр
-        event EventHandler<FilterEventArgs> FilterWasDeleted;
-
-        // Смена операции
-        event EventHandler ChangeOperation;
-        // Нажата кнопка генерации
-        event EventHandler GenerateClick;
-        // Нажата кнопка показа ответов
-        event EventHandler ShowAnswersClick;
-        
-        // Изменить текст примеров
-        void ChangeText(List<string> Examples);
-        // Загрузка фильтров
-        void LoadFilters(List<Filter> filters);
-
-        // Передача фильтра
-        Filter CurrentFilter { get; set; }
-        // Передача состояния использования фильтра
-        bool UsingFilters { get; }
-        // Изменение описания фильтра
-        void ChangeFilterDescription(string description);
-    }
-
-    public partial class MainForm : System.Windows.Forms.Form, IMainForm
+    public partial class MainForm : Form, IMainForm
     {
         List<Control> ExamplesArea;
         public static bool ChildWasCreated = false;
@@ -355,35 +310,30 @@ namespace MathTrainer
 
         private void LoadConfig()
         {
-            Settings settings = new Settings();
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Settings));
-            using (FileStream fs = new FileStream("../Resource/settings.json", FileMode.Open))
-            {
-                settings = (Settings)jsonFormatter.ReadObject(fs);
-            }
+            Settings settings = SettingsManager.LoadSettings();
 
             // Смена шрифта
-            string currentFont = settings.CurrentFontName;
-            Font font = new Font(currentFont, settings.FontSize);
+            string currentFont = settings.MainFontName;
+            Font font = new Font(currentFont, settings.MainFontSize);
             globalFont = font;
             ChangeFont(font);
 
             // Смена шрифта примеров
-            currentFont = settings.CurrentExamplesFontName;
+            currentFont = settings.ExamplesFontName;
             font = new Font(currentFont, settings.ExamplesFontSize);
             ChangeExamplesFont(font);
 
             // Смена бэкграунда
-            string imageName = "../Resource/Backgrounds/" + settings.BackgroundNumber + ".jpg";
+            string imageName = "../Resource/Backgrounds/" + settings.BackgroundId + ".jpg";
             BackgroundImage = Image.FromFile(imageName);
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            if (settings.Stretch) BackgroundImageLayout = ImageLayout.Stretch;
+            if (settings.StretchBackground) BackgroundImageLayout = ImageLayout.Stretch;
             else BackgroundImageLayout = ImageLayout.Tile;
 
             // Загрузка числа примеров
-            ChangeExamplesCount(settings.NumOfExamples);
+            ChangeExamplesCount(settings.ExamplesCount);
         }
 
         /// <summary>
@@ -424,7 +374,7 @@ namespace MathTrainer
 
         public int CurrentFilterIndex => comboBoxFilter.SelectedIndex;
 
-        public bool UsingFilters => checkBoxUseFiler.Checked;
+        public bool UseFilters => checkBoxUseFiler.Checked;
 
         Filter IMainForm.CurrentFilter
         {

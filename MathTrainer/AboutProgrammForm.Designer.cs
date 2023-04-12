@@ -32,31 +32,31 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutProgrammForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelAbout = new System.Windows.Forms.Label();
+            this.headerLabel = new System.Windows.Forms.Label();
+            this.descriptionLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // headerLabel
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.Info;
-            this.label1.Font = new System.Drawing.Font("TF2 Secondary", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(92, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(623, 41);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Программа генерирует следующие примеры:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.headerLabel.BackColor = System.Drawing.SystemColors.Info;
+            this.headerLabel.Font = new System.Drawing.Font("TF2 Secondary", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.headerLabel.Location = new System.Drawing.Point(92, 20);
+            this.headerLabel.Name = "headerLabel";
+            this.headerLabel.Size = new System.Drawing.Size(623, 41);
+            this.headerLabel.TabIndex = 0;
+            this.headerLabel.Text = "Программа генерирует следующие примеры:";
+            this.headerLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // labelAbout
+            // descriptionLabel
             // 
-            this.labelAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAbout.Font = new System.Drawing.Font("TF2 Secondary", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAbout.Location = new System.Drawing.Point(12, 87);
-            this.labelAbout.Name = "labelAbout";
-            this.labelAbout.Size = new System.Drawing.Size(776, 320);
-            this.labelAbout.TabIndex = 1;
+            this.descriptionLabel.Font = new System.Drawing.Font("TF2 Secondary", 13.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.descriptionLabel.Location = new System.Drawing.Point(12, 87);
+            this.descriptionLabel.Name = "descriptionLabel";
+            this.descriptionLabel.Size = new System.Drawing.Size(776, 320);
+            this.descriptionLabel.TabIndex = 1;
             // 
             // AboutProgrammForm
             // 
@@ -65,8 +65,8 @@
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.labelAbout);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.descriptionLabel);
+            this.Controls.Add(this.headerLabel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -79,7 +79,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label labelAbout;
+        private System.Windows.Forms.Label headerLabel;
+        private System.Windows.Forms.Label descriptionLabel;
     }
 }
