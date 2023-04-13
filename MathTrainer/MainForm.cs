@@ -5,12 +5,19 @@ using System.Drawing;
 
 namespace MathTrainer
 {
+    /// <summary>
+    /// Основное окно приложения
+    /// </summary>
     public partial class MainForm : Form, IMainForm
     {
+        /// <summary>
+        /// Максимальное количество выводимых примеров
+        /// </summary>
+        private const int MaxProblemsCount = 10;
+        
         List<Control> ExamplesArea;
         public static bool ChildWasCreated = false;
         public static bool NotesWasCreated = false;
-        Font globalFont;
         public Filter specialFilter;
 
         // Инициализация
@@ -35,9 +42,9 @@ namespace MathTrainer
 
             checkBoxUseFiler.CheckedChanged += CheckBoxUseFiler_CheckedChanged;
 
-            buttonNewFilter.Click += ButtonNewFilter_Click;
+            buttonNewFilter.Click += CreateNewFilter;
             buttonDeleteFilter.Click += ButtonDeleteFilter_Click;
-            buttonEditFilter.Click += ButtonEditFilter_Click;
+            buttonEditFilter.Click += EditSelectedFilter;
             buttonConfirm.Click += ButtonConfirm_Click;
 
             comboBoxFilter.SelectionChangeCommitted += ComboBoxFilter_SelectionChangeCommitted;
@@ -46,17 +53,19 @@ namespace MathTrainer
             #endregion
 
             #region Создание массива с текстами примеров
-            ExamplesArea = new List<Control>();
-            ExamplesArea.Add(labelNum1);
-            ExamplesArea.Add(labelNum2);
-            ExamplesArea.Add(labelNum3);
-            ExamplesArea.Add(labelNum4);
-            ExamplesArea.Add(labelNum5);
-            ExamplesArea.Add(labelNum6);
-            ExamplesArea.Add(labelNum7);
-            ExamplesArea.Add(labelNum8);
-            ExamplesArea.Add(labelNum9);
-            ExamplesArea.Add(labelNum10);
+            ExamplesArea = new List<Control>
+            {
+                labelNum1,
+                labelNum2,
+                labelNum3,
+                labelNum4,
+                labelNum5,
+                labelNum6,
+                labelNum7,
+                labelNum8,
+                labelNum9,
+                labelNum10
+            };
             #endregion
 
             comboBox1.SelectedIndex = 0;
@@ -76,7 +85,6 @@ namespace MathTrainer
             {
                 VersionForm versionForm = new VersionForm();
                 versionForm.Location = Location;
-                versionForm.ChangeFont(globalFont);
                 versionForm.Show();
                 ChildWasCreated = true;
             }
@@ -86,8 +94,8 @@ namespace MathTrainer
         private void ButtonConfirm_Click(object sender, EventArgs e)
         {
             FilterEventArgs arg = new FilterEventArgs();
-            arg.index = comboBoxFilter.SelectedIndex;
-            if (FilterWasDeleted!=null) FilterWasDeleted(this, arg);
+            arg.index = CurrentFilterIndex;
+            FilterWasDeleted?.Invoke(this, arg);
 
             comboBoxFilter.Items.RemoveAt(arg.index);
             if (arg.index>0) comboBoxFilter.SelectedIndex = arg.index-1;
@@ -99,7 +107,7 @@ namespace MathTrainer
         // Событие по нажатию кнопки удалить фильтр
         private void ButtonDeleteFilter_Click(object sender, EventArgs e)
         {
-            if ((!buttonConfirm.Visible) && (comboBoxFilter.SelectedIndex >= 0))
+            if (!buttonConfirm.Visible && CurrentFilterIndex >= 0)
             {
                 buttonConfirm.Visible = true;
             }
@@ -108,7 +116,7 @@ namespace MathTrainer
         // Событие по смене использвания/отключения фильтров
         private void CheckBoxUseFiler_CheckedChanged1(object sender, EventArgs e)
         {
-            if (UseFilterChanged!=null) UseFilterChanged(this, EventArgs.Empty);
+            UseFilterChanged?.Invoke(this, EventArgs.Empty);
         }
 
         // Событие по смене выбранного фильтра
@@ -122,34 +130,20 @@ namespace MathTrainer
             FilterWasChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        // Событие по нажатию кнопки "Добавить фильтр"
-        private void ButtonNewFilter_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Событие по нажатию кнопки "Добавить фильтр"
+        /// </summary>
+        private void CreateNewFilter(object sender, EventArgs e)
         {
-            if (!ChildWasCreated)
-            {
-                FilterEditForm filterEditForm = new FilterEditForm(this, false);
-                filterEditForm.Location = Location;
-                filterEditForm.ChangeFont(globalFont);
-                filterEditForm.Show();
-                ChildWasCreated = true;
-            }
+            CreateFilterEditForm(false);
         }
 
-        // Событие по нажатию кнопки "Изменить фильтр"
-        private void ButtonEditFilter_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Событие по нажатию кнопки "Изменить фильтр"
+        /// </summary>
+        private void EditSelectedFilter(object sender, EventArgs e)
         {
-            if ((!ChildWasCreated) && (comboBoxFilter.SelectedIndex >= 0))
-            {
-                FilterEditForm filterEditForm = new FilterEditForm(this, true);
-                filterEditForm.Location = Location;
-                filterEditForm.Text = "Редактирование фильтра";
-                filterEditForm.FilterIndex = comboBoxFilter.SelectedIndex;
-                filterEditForm.Icon = new Icon("../Resource/Icons/Edit.ico");
-                filterEditForm.LoadFilter(CurrentFilter);
-                filterEditForm.ChangeFont(globalFont);
-                filterEditForm.Show();
-                ChildWasCreated = true;
-            }
+            CreateFilterEditForm(true);
         }
 
         // Событие по галочке "Специальные фильтры"
@@ -194,7 +188,6 @@ namespace MathTrainer
                 QuestionForm questionForm = new QuestionForm();
                 questionForm.Location = Location;
                 questionForm.Show();
-                questionForm.ChangeFont(globalFont);
                 ChildWasCreated = true;
             }
         }
@@ -204,10 +197,9 @@ namespace MathTrainer
         {
             if (!ChildWasCreated)
             {
-                AboutProgrammForm aboutProgrammForm = new AboutProgrammForm();
+                var aboutProgrammForm = new AboutProgrammForm();
                 aboutProgrammForm.Location = Location;
                 aboutProgrammForm.Show();
-                aboutProgrammForm.ChangeFont(globalFont);
                 ChildWasCreated = true;
             }
         }
@@ -248,6 +240,45 @@ namespace MathTrainer
         }
         #endregion
 
+        #region Основные методы
+
+        /// <summary>
+        /// Добавить новый фильтр чисел к списку уже имеющихся фильтров
+        /// </summary>
+        /// <param name="newFilter">Новый фильтр</param>
+        public void AddNewFilter(Filter newFilter)
+        {
+            specialFilter = newFilter;
+            comboBoxFilter.Items.Add(specialFilter.FilterName);
+            FilterWasAdded?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Обновить выбранный фильтр
+        /// </summary>
+        /// <param name="filter">Новые параметры фильтра</param>
+        /// <param name="index">Индекс фильтра в общем списке фильтров</param>
+        public void UpdateFilter(Filter filter, int index)
+        {
+            specialFilter = filter;
+            comboBoxFilter.Items[index] = filter.FilterName;
+
+            if (index == CurrentFilterIndex)
+            {
+                labelAboutFiltr.Text = filter.Description;
+            }
+
+            FilterEventArgs e = new FilterEventArgs
+            {
+                filter = filter,
+                index = index
+            };
+
+            FilterWasUpdated?.Invoke(this, e);
+        }
+
+        #endregion
+
         #region Вспомогательные методы
         /// <summary>
         /// Установить максимально возможное значение числа N (для ограничения возведения больших чисел в большую степень)
@@ -256,12 +287,11 @@ namespace MathTrainer
         {
             if (GetM == 1)
             {
-                // Значение по умолчанию
-                numericUpDownN.Maximum = 7;
+                numericUpDownN.Maximum = numericUpDownM.Maximum;
             }
             else
             {
-                // Значение N меняется от 7 до 2 с увеличением значения M от 2 до 7
+                // Значение N меняется от 7 до 2 с увеличением значения M от 2 до 7 (7 + 2 = 9)
                 numericUpDownN.Maximum = 9 - GetM;
             }
         }
@@ -280,8 +310,6 @@ namespace MathTrainer
             comboBoxFilter.Font = fnt;
             buttonConfirm.Font = fnt;
             labelAboutFiltr.Font = fnt;
-
-            globalFont = fnt;
         }
 
         public void ChangeExamplesFont(Font fnt)
@@ -315,7 +343,6 @@ namespace MathTrainer
             // Смена шрифта
             string currentFont = settings.MainFontName;
             Font font = new Font(currentFont, settings.MainFontSize);
-            globalFont = font;
             ChangeFont(font);
 
             // Смена шрифта примеров
@@ -337,29 +364,24 @@ namespace MathTrainer
         }
 
         /// <summary>
-        /// Добавить новый фильтр чисел к списку уже имеющихся фильтров
+        /// Создать окно создания/редактирования фильтров
         /// </summary>
-        public void AddFilters()
+        /// <param name="isEditingForm">Является ли окно окном редактирования, либо окном создания нового фильтра</param>
+        private void CreateFilterEditForm(bool isEditingForm)
         {
-            comboBoxFilter.Items.Add(specialFilter.FilterName);
-            FilterWasAdded?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void UpdateFilter(Filter filter, int index)
-        {
-            comboBoxFilter.Items[index] = filter.FilterName;
-
-            if (index == comboBoxFilter.SelectedIndex)
+            bool itsPossibleToCreateForm = !ChildWasCreated;
+            itsPossibleToCreateForm &= isEditingForm ? CurrentFilterIndex >= 0 : true;
+            if (!itsPossibleToCreateForm)
             {
-                labelAboutFiltr.Text = filter.Description;
+                return;
             }
 
-            FilterEventArgs e = new FilterEventArgs();
-            e.filter = filter;
-            e.index = index;
+            var filterEditForm = new FilterEditForm(this, isEditingForm);
+            filterEditForm.Location = Location;
+            filterEditForm.Show();
+            ChildWasCreated = true;
+        }
 
-            FilterWasUpdated?.Invoke(this, e);
-        } 
         #endregion
 
         #region Реализация IMainForm
@@ -370,13 +392,11 @@ namespace MathTrainer
 
         public int GetN => (int)numericUpDownN.Value;
 
-        public Filter CurrentFilter => specialFilter;
-
         public int CurrentFilterIndex => comboBoxFilter.SelectedIndex;
 
         public bool UseFilters => checkBoxUseFiler.Checked;
 
-        Filter IMainForm.CurrentFilter
+        public Filter CurrentFilter
         {
             get => specialFilter;
             set => specialFilter = value;
@@ -392,9 +412,9 @@ namespace MathTrainer
         public event EventHandler<FilterEventArgs> FilterWasUpdated;
         public event EventHandler<FilterEventArgs> FilterWasDeleted;
 
-        public void ChangeText(List<string> Examples)
+        public void ChangeProblemsText(List<string> Examples)
         {
-            for (int i=0; i<10; i++)
+            for (int i = 0; i < MaxProblemsCount; i++)
             {
                 ExamplesArea[i].Text = Examples[i];
             }
@@ -402,7 +422,7 @@ namespace MathTrainer
 
         public void LoadFilters(List<Filter> filters)
         {
-            for (int i=0; i< filters.Count; i++)
+            for (int i = 0; i < filters.Count; i++)
             {
                 comboBoxFilter.Items.Add(filters[i].FilterName);
             }

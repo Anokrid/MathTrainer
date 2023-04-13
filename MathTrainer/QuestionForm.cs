@@ -22,6 +22,7 @@ namespace MathTrainer
         public QuestionForm()
         {
             InitializeComponent();
+            FontSetter.SetMainFont(Controls);
             buttonForward.Click += ButtonForwardClick;
             buttonBack.Click += ButtonBackClick;
         }
@@ -62,17 +63,6 @@ namespace MathTrainer
             /// Изображения занимают много памяти, и если их вовремя не очищать, то происходит раздувание памяти, занимаемой приложением, поэтому вызов уборщика мусора решает данную проблему
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
-
-        /// <summary>
-        /// Изменить шритф элементов управления
-        /// </summary>
-        /// <param name="fnt">Новый шрифт</param>
-        public void ChangeFont(Font fnt)
-        {
-            buttonBack.Font = fnt;
-            buttonForward.Font = fnt;
-            labelPage.Font = fnt;
         }
     }
 }

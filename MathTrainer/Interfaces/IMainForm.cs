@@ -90,7 +90,7 @@ namespace MathTrainer
         /// Изменить текст примеров
         /// </summary>
         /// <param name="Examples">Перечень примеров</param>
-        void ChangeText(List<string> Examples);
+        void ChangeProblemsText(List<string> Examples);
 
         /// <summary>
         /// Загрузить фильтры для их отображения

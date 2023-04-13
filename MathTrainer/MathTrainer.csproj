@@ -62,9 +62,11 @@
     <Compile Include="FilterEditForm.Designer.cs">
       <DependentUpon>FilterEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\FontSetter.cs" />
     <Compile Include="HelperClasses\FilterEventArgs.cs" />
     <Compile Include="HelperClasses\NotesManager.cs" />
     <Compile Include="HelperClasses\SettingsManager.cs" />
+    <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

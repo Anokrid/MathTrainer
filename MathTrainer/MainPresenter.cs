@@ -105,7 +105,7 @@ namespace MathTrainer
         {
             _problemsManager.Solve();
             _problemsManager.GenerateProblemsText(true);
-            _view.ChangeText(_problemsManager.TrainingText);
+            _view.ChangeProblemsText(_problemsManager.TrainingText);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace MathTrainer
                 _problemsManager.GenerateNumbers();
             }
             _problemsManager.GenerateProblemsText(false);
-            _view.ChangeText(_problemsManager.TrainingText);
+            _view.ChangeProblemsText(_problemsManager.TrainingText);
         }
     }
 }

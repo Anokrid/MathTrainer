@@ -1,271 +1,320 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace MathTrainer
 {
-
+    /// <summary>
+    /// Окно создания и редактирования фильтров, применяемых к числам А и В, участвующим в примерах
+    /// </summary>
     public partial class FilterEditForm : Form
     {
-        List<ComboBox> ComboBoxesA;
-        List<ComboBox> ComboBoxesB;
-        List<NumericUpDown> NumericSumm;
-        MainForm mainForm;
-
-        bool isEdit;
-        public int FilterIndex;
+        #region Закрытые поля
         
-        int ClearNumber = 0;    // Отвечает за то, что будет очищено
+        /// <summary>
+        /// Список комбобоксов, отвечающих за фильтр, применяемый к конкретной цифре числа А
+        /// </summary>
+        private List<ComboBox> _comboBoxesA;
 
+        /// <summary>
+        /// Список комбобоксов, отвечающих за фильтр, применяемый к конкретной цифре числа В
+        /// </summary>
+        private List<ComboBox> _comboBoxesB;
+
+        /// <summary>
+        /// Список контролов, отвечающих за задание сумм, которые должны образовывать цифры чисел А и В, помеченные фильтрами S1-S5
+        /// </summary>
+        List<NumericUpDown> NumericSums;
+
+        /// <summary>
+        /// Основное окно приложения (оно же родительское окно)
+        /// </summary>
+        private MainForm _mainForm;
+
+        /// <summary>
+        /// Является ли данное окно окном редактирования, либо же это окно создания нового фильтра
+        /// </summary>
+        private bool _isEditForm;
+
+        /// <summary>
+        /// Индекс редактируемого фильтра в списке всех фильтров
+        /// </summary>
+        public int _filterIndex;
+
+        /// <summary>
+        /// Метод, отвечающий за очистку определённых контролов формы
+        /// </summary>
+        ClearOperation clearDataOperation;
+
+        /// <summary>
+        /// Операция по очистке определённой информации в окне
+        /// </summary>
+        private delegate void ClearOperation();
+        #endregion
+
+        /// <summary>
+        /// Конструктор формы, позволяющей создавать и редактировать фильтры, применяемые к числам А и В, участвующим в генерируемых примерах
+        /// </summary>
+        /// <param name="mainForm">Основное окно приложения</param>
+        /// <param name="isEdit">Является ли данное окно окном редактирования, либо окном создания фильтра</param>
         public FilterEditForm(MainForm mainForm, bool isEdit)
         {
+            _mainForm = mainForm;
+            _isEditForm = isEdit;
+
             InitializeComponent();
+            FontSetter.SetMainFont(Controls);
 
-            this.mainForm = mainForm;
-            this.isEdit = isEdit;
-
-            #region Заполнение массивов комбобоксов
-            ComboBoxesA = new List<ComboBox>();
-            ComboBoxesA.Add(comboBoxA1);
-            ComboBoxesA.Add(comboBoxA2);
-            ComboBoxesA.Add(comboBoxA3);
-            ComboBoxesA.Add(comboBoxA4);
-            ComboBoxesA.Add(comboBoxA5);
-            ComboBoxesA.Add(comboBoxA6);
-            ComboBoxesA.Add(comboBoxA7);
-
-            ComboBoxesB = new List<ComboBox>();
-            ComboBoxesB.Add(comboBoxB1);
-            ComboBoxesB.Add(comboBoxB2);
-            ComboBoxesB.Add(comboBoxB3);
-            ComboBoxesB.Add(comboBoxB4);
-            ComboBoxesB.Add(comboBoxB5);
-            ComboBoxesB.Add(comboBoxB6);
-            ComboBoxesB.Add(comboBoxB7);
-
-            for (int i=0; i<ComboBoxesA.Count; i++)
-            {
-                ComboBoxesA[i].SelectedIndex = 0;
-                ComboBoxesB[i].SelectedIndex = 0;
-            }
-            #endregion
-
-            #region Заполнение массивов числовых полей
-            NumericSumm = new List<NumericUpDown>();
-            NumericSumm.Add(numericUpDownS1);
-            NumericSumm.Add(numericUpDownS2);
-            NumericSumm.Add(numericUpDownS3);
-            NumericSumm.Add(numericUpDownS4);
-            NumericSumm.Add(numericUpDownS5);
-            #endregion
-
-            buttonClearFilters.Click += ButtonClearFilters_Click;
-            buttonClearText.Click += ButtonClearText_Click;
-            buttonClearSumm.Click += ButtonClearSumm_Click;
-            buttonClearAll.Click += ButtonClearAll_Click;
-            buttonYes.Click += ButtonYes_Click;
-            buttonNo.Click += ButtonNo_Click;
-            buttonSave.Click += ButtonSave_Click;
+            FillComboBoxesArrays();
+            FillNumericUpDownArray();
+            SubscribeOnEvents();
+            CheckIfItsEditingForm();
         }
 
-        // Нажатие кнопки сохранить
-        private void ButtonSave_Click(object sender, EventArgs e)
+        #region Обработка событий
+
+        /// <summary>
+        /// Была нажата кнопка сохранения нового фильтра / изменения старого фильтра
+        /// </summary>
+        private void ButtonSaveClick(object sender, EventArgs e)
         {
             SetNewFilter();
             Close();
         }
 
-        // Нажатие кнопки Нет
-        private void ButtonNo_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Была нажата кнопка отмены очистки контролов
+        /// </summary>
+        private void ButtonNoClick(object sender, EventArgs e)
         {
             ShowYesNoButtons(false);
         }
 
-        // Нажатие кнопки Да
-        private void ButtonYes_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Была нажата кнопка подтверждения очистки определённых контролов
+        /// </summary>
+        private void ButtonYesClick(object sender, EventArgs e)
         {
-            switch (ClearNumber)
+            clearDataOperation();
+            ShowYesNoButtons(false);
+        }
+
+        /// <summary>
+        /// Была нажата кнопка "Очистить всё"
+        /// </summary>
+        private void ButtonClearAllClick(object sender, EventArgs e)
+        {
+            clearDataOperation = () =>
             {
-                case 0:
-                    ClearFilters();
-                    break;
-                case 1:
-                    ClearText();
-                    break;
-                case 2:
-                    ClearSumm();
-                    break;
-                case 3:
-                    ClearFilters();
-                    ClearText();
-                    ClearSumm();
-                    break;
+                ClearFilters();
+                ClearText();
+                ClearSum();
+            };
+
+            ShowYesNoButtons(true);
+        }
+
+        /// <summary>
+        /// Была нажата кнопка "Очистить суммы"
+        /// </summary>
+        private void ButtonClearSumClick(object sender, EventArgs e)
+        {
+            clearDataOperation = ClearSum;
+            ShowYesNoButtons(true);
+        }
+
+        /// <summary>
+        /// Была нажата кнопка "Очистить текст"
+        /// </summary>
+        private void ButtonClearTextClick(object sender, EventArgs e)
+        {
+            clearDataOperation = ClearText;
+            ShowYesNoButtons(true);
+        }
+
+        /// <summary>
+        /// Была нажата кнопка "Сбросить фильтры"
+        /// </summary>
+        private void ButtonClearFiltersClick(object sender, EventArgs e)
+        {
+            clearDataOperation = ClearFilters;
+            ShowYesNoButtons(true);
+        }
+
+        #endregion
+
+        #region Вспомогательные методы
+
+        /// <summary>
+        /// Заполнить массивы комбобоксов, содержащих текущие фильтры, применяемые к конкретным цифрам чисел А и В
+        /// </summary>
+        private void FillComboBoxesArrays()
+        {
+            _comboBoxesA = new List<ComboBox>
+            {
+                comboBoxA1,
+                comboBoxA2,
+                comboBoxA3,
+                comboBoxA4,
+                comboBoxA5,
+                comboBoxA6,
+                comboBoxA7
+            };
+
+            _comboBoxesB = new List<ComboBox>
+            {
+                comboBoxB1,
+                comboBoxB2,
+                comboBoxB3,
+                comboBoxB4,
+                comboBoxB5,
+                comboBoxB6,
+                comboBoxB7
+            };
+
+            for (int i = 0; i < _comboBoxesA.Count; i++)
+            {
+                _comboBoxesA[i].SelectedIndex = 0;
+                _comboBoxesB[i].SelectedIndex = 0;
             }
-
-            ShowYesNoButtons(false);
         }
 
-        // Нажатие кнопки очистить всё
-        private void ButtonClearAll_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Заполнить массив контролов, задающих суммы определённых цифр
+        /// </summary>
+        private void FillNumericUpDownArray()
         {
-            ClearNumber = 3;
-            ShowYesNoButtons(true);
+            NumericSums = new List<NumericUpDown>
+            {
+                numericUpDownS1,
+                numericUpDownS2,
+                numericUpDownS3,
+                numericUpDownS4,
+                numericUpDownS5
+            };
         }
 
-        // Нажатие кнопки "Очистить суммы"
-        private void ButtonClearSumm_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Проверить, не является ли окно окном редактирования суже созданного фильтра, и если так, то выполнить определённые действия
+        /// </summary>
+        private void CheckIfItsEditingForm()
         {
-            ClearNumber = 2;
-            ShowYesNoButtons(true);
+            if (_isEditForm)
+            {
+                Text = "Редактирование фильтра";
+                Icon = new Icon("../Resource/Icons/Edit.ico");
+                _filterIndex = _mainForm.CurrentFilterIndex;
+                LoadFilterData(_mainForm.CurrentFilter);
+            }
         }
 
-        // Нажатие на кнопку "Очистить текст"
-        private void ButtonClearText_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Подписаться на события формы
+        /// </summary>
+        private void SubscribeOnEvents()
         {
-            ClearNumber = 1;
-            ShowYesNoButtons(true);
+            buttonClearFilters.Click += ButtonClearFiltersClick;
+            buttonClearText.Click += ButtonClearTextClick;
+            buttonClearSumm.Click += ButtonClearSumClick;
+            buttonClearAll.Click += ButtonClearAllClick;
+            buttonYes.Click += ButtonYesClick;
+            buttonNo.Click += ButtonNoClick;
+            buttonSave.Click += ButtonSaveClick;
         }
 
-        // Нажатие на кнопку "Сбросить фильтры"
-        private void ButtonClearFilters_Click(object sender, EventArgs e)
-        {
-            ClearNumber = 0;
-            ShowYesNoButtons(true);
-        }
-
-        // Показывать кнопки ДА/нет
+        /// <summary>
+        /// Показывать кнопки ДА/НЕТ
+        /// </summary>
+        /// <param name="flag">Должны ли отображаться кнопки подтверждения очистки определённых контролов</param>
         private void ShowYesNoButtons(bool flag)
         {
             buttonYes.Visible = flag;
             buttonNo.Visible = flag;
         }
 
-        // Функция очистки фильтров
+        /// <summary>
+        /// Очистить все фильтры, применяемые к цифрам
+        /// </summary>
         private void ClearFilters()
         {
-            for (int i = 0; i < ComboBoxesA.Count; i++)
+            for (int i = 0; i < _comboBoxesA.Count; i++)
             {
-                ComboBoxesA[i].SelectedIndex = 0;
-                ComboBoxesB[i].SelectedIndex = 0;
+                _comboBoxesA[i].SelectedIndex = 0;
+                _comboBoxesB[i].SelectedIndex = 0;
             }
         }
 
-        // Функция очистки текста
+        /// <summary>
+        /// Очистить весь текст (название и описание фильтра)
+        /// </summary>
         private void ClearText()
         {
             textBoxFilterName.Text = "";
             textBoxDescrition.Text = "";
         }
 
-        // Функция очистки сумм
-        private void ClearSumm()
+        /// <summary>
+        /// Очистить суммы
+        /// </summary>
+        private void ClearSum()
         {
             for (int i = 0; i < Filter.SumsCount; i++)
             {
-                NumericSumm[i].Value = 0;
+                NumericSums[i].Value = 0;
             }
         }
 
-        // Сбор данных с элементов управления и запись в Filter
-        public void SetNewFilter()
+        /// <summary>
+        /// Собрать данные об отредактированном/созданном фильтре и передать в основное окно программы
+        /// </summary>
+        private void SetNewFilter()
         {
-            Filter newFilter = new Filter();
-
-            // Название фильтра
-            newFilter.FilterName = textBoxFilterName.Text;
-
-            // Описание фильтра
-            newFilter.Description = textBoxDescrition.Text;
-
-            // Значения сумм
-            for (int i=0; i<Filter.SumsCount; i++)
+            Filter newFilter = new Filter
             {
-                newFilter.Sum[i] = (int)NumericSumm[i].Value;
-            }
+                FilterName = textBoxFilterName.Text,
+                Description = textBoxDescrition.Text
+            };
 
-            // Значения фильтров
-            for (int i=0; i<Filter.Dimension; i++)
-            {
-                newFilter.FilterA[i] = ComboBoxesA[i].SelectedItem.ToString();
-                newFilter.FilterB[i] = ComboBoxesB[i].SelectedItem.ToString();
-            }
-
-            mainForm.specialFilter = newFilter;
-            if (!isEdit) mainForm.AddFilters();
-            else mainForm.UpdateFilter(newFilter, FilterIndex);
-        }
-
-        // Загрузка данных с фильтра в элементы управления
-        public void LoadFilter(Filter filter)
-        {
-            // Название фильтра
-            textBoxFilterName.Text = filter.FilterName;
-
-            // Описание фильтра
-            textBoxDescrition.Text = filter.Description;
-
-            // Значения сумм
             for (int i = 0; i < Filter.SumsCount; i++)
             {
-                NumericSumm[i].Value = filter.Sum[i];
+                newFilter.Sum[i] = (int)NumericSums[i].Value;
             }
-
-            // Значения фильтров
             for (int i = 0; i < Filter.Dimension; i++)
             {
-                ComboBoxesA[i].SelectedItem = filter.FilterA[i];
-                ComboBoxesB[i].SelectedItem = filter.FilterB[i];
+                newFilter.FilterA[i] = _comboBoxesA[i].SelectedItem.ToString();
+                newFilter.FilterB[i] = _comboBoxesB[i].SelectedItem.ToString();
+            }
+
+            if (_isEditForm)
+            {
+                _mainForm.UpdateFilter(newFilter, _filterIndex);
+            }
+            else
+            {
+                _mainForm.AddNewFilter(newFilter);
             }
         }
 
-        // Смена шрифта
-        public void ChangeFont(Font font)
+        /// <summary>
+        /// Заполнение элементов управления окна данными о редактируемом фильтре
+        /// </summary>
+        /// <param name="filter">Редактируемый фильтр</param>
+        private void LoadFilterData(Filter filter)
         {
-            textBoxFilterName.Font = font;
+            textBoxFilterName.Text = filter.FilterName;
+            textBoxDescrition.Text = filter.Description;
 
-            labelNum1.Font = font;
-            labelNum2.Font = font;
-
-            labelS1.Font = font;
-            labelS2.Font = font;
-            labelS3.Font = font;
-            labelS4.Font = font;
-            labelS5.Font = font;
-
-            numericUpDownS1.Font = font;
-            numericUpDownS2.Font = font;
-            numericUpDownS3.Font = font;
-            numericUpDownS4.Font = font;
-            numericUpDownS5.Font = font;
-
-            comboBoxA1.Font = font;
-            comboBoxA2.Font = font;
-            comboBoxA3.Font = font;
-            comboBoxA4.Font = font;
-            comboBoxA5.Font = font;
-            comboBoxA6.Font = font;
-            comboBoxA7.Font = font;
-
-            comboBoxB1.Font = font;
-            comboBoxB2.Font = font;
-            comboBoxB3.Font = font;
-            comboBoxB4.Font = font;
-            comboBoxB5.Font = font;
-            comboBoxB6.Font = font;
-            comboBoxB7.Font = font;
-
-            textBoxDescrition.Font = font;
-
-            buttonClearFilters.Font = font;
-            buttonClearText.Font = font;
-            buttonClearSumm.Font = font;
-            buttonClearAll.Font = font;
-
-            buttonSave.Font = font;
-
-            buttonYes.Font = font;
-            buttonNo.Font = font;
-        }
+            for (int i = 0; i < Filter.SumsCount; i++)
+            {
+                NumericSums[i].Value = filter.Sum[i];
+            }
+            for (int i = 0; i < Filter.Dimension; i++)
+            {
+                _comboBoxesA[i].SelectedItem = filter.FilterA[i];
+                _comboBoxesB[i].SelectedItem = filter.FilterB[i];
+            }
+        } 
+        #endregion
     }
 }

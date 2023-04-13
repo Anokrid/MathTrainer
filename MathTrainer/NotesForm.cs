@@ -37,7 +37,7 @@ namespace MathTrainer
         {
             InitializeComponent();
             LoadNotes();
-            LoadAndApplySettings();
+            SetFonts();
 
             toolTip1.SetToolTip(buttonAdd, "Добавить заметку");
             toolTip1.SetToolTip(buttonDelete, "Удалить заметку");
@@ -185,13 +185,12 @@ namespace MathTrainer
         }
 
         /// <summary>
-        /// Загрузить и применить настройки
+        /// Загрузить и применить шрифты для элементов управления
         /// </summary>
-        private void LoadAndApplySettings()
+        private void SetFonts()
         {
-            Settings settings = SettingsManager.LoadSettings();
-            var currentFont = new Font(settings.MainFontName, settings.MainFontSize);
-            var currentNotesFont = new Font(settings.NotesFontName, settings.NotesFontSize);
+            var currentFont = FontSetter.GetMainFont();
+            var currentNotesFont = FontSetter.GetNotesFont();
 
             // Устанавливаем элементам управления основной шрифт
             labelNames.Font = currentFont;

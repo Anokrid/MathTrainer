@@ -14,7 +14,28 @@ namespace MathTrainer
         {
             InitializeComponent();
 
-            #region Заполнение текста
+            ChangeFont();
+            FillText();
+            SetBackGround();
+        }
+
+        /// <summary>
+        /// Изменить шрифт элементов управления
+        /// </summary>
+        /// <param name="fnt">Используемый шрифт</param>
+        private void ChangeFont()
+        {
+            Font fnt = FontSetter.GetMainFont();
+
+            headerLabel.Font = new Font(fnt.Name, fnt.Size + 2);
+            descriptionLabel.Font = fnt;
+        }
+
+        /// <summary>
+        /// Заполнить текстовое поле описанием текущего функционала программы
+        /// </summary>
+        private void FillText()
+        {
             var builder = new StringBuilder(1024);
             builder.Append("1) Сложение:   2,3,4,5,6,7-значные числа с 2,3,4,5,6,7-значными числами\n");
             builder.Append("2) Вычитание:  2,3,4,5,6,7-значные числа с 2,3,4,5,6,7-значными числами\n");
@@ -29,23 +50,18 @@ namespace MathTrainer
             builder.Append("    5.6) 7-значные числа в степень 2\n");
             builder.Append("6) Извлечение из 2,3,4,5,6,7-значных числел корней степени 2,3,4,5,6,7");
             descriptionLabel.Text = builder.ToString();
-            #endregion
+        }
 
+        /// <summary>
+        /// Установить задний фон окна
+        /// </summary>
+        private void SetBackGround()
+        {
             string imageName = "../Resource/Backgrounds/1.jpg";
             BackgroundImage = Image.FromFile(imageName);
             BackgroundImageLayout = ImageLayout.Stretch;
             System.GC.Collect();
             System.GC.WaitForPendingFinalizers();
-        }
-
-        /// <summary>
-        /// Изменить шрифт элементов управления
-        /// </summary>
-        /// <param name="fnt">Используемый шрифт</param>
-        public void ChangeFont(Font fnt)
-        {
-            headerLabel.Font = new Font(fnt.Name, fnt.Size + 2);
-            descriptionLabel.Font = fnt;
         }
     }
 }
