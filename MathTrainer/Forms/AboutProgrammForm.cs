@@ -57,11 +57,8 @@ namespace MathTrainer
         /// </summary>
         private void SetBackGround()
         {
-            string imageName = "../Resource/Backgrounds/1.jpg";
-            BackgroundImage = Image.FromFile(imageName);
+            BackgroundImage = BackgroundManager.GetBackground(1);
             BackgroundImageLayout = ImageLayout.Stretch;
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
         }
     }
 }

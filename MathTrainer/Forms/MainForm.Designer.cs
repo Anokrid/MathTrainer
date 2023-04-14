@@ -41,7 +41,7 @@
             this.LabelM = new System.Windows.Forms.Label();
             this.LabelN = new System.Windows.Forms.Label();
             this.LabelFunction = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxOperations = new System.Windows.Forms.ComboBox();
             this.labelNum1 = new System.Windows.Forms.Label();
             this.labelNum2 = new System.Windows.Forms.Label();
             this.labelNum3 = new System.Windows.Forms.Label();
@@ -54,14 +54,14 @@
             this.labelNum10 = new System.Windows.Forms.Label();
             this.numericUpDownM = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownN = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxUseFiler = new System.Windows.Forms.CheckBox();
+            this.labelShowFilters = new System.Windows.Forms.Label();
             this.comboBoxFilter = new System.Windows.Forms.ComboBox();
-            this.buttonNewFilter = new System.Windows.Forms.Button();
-            this.buttonDeleteFilter = new System.Windows.Forms.Button();
-            this.buttonEditFilter = new System.Windows.Forms.Button();
-            this.buttonConfirm = new System.Windows.Forms.Button();
+            this.buttonNewFilter = new MathTrainer.RoundButton();
+            this.buttonDeleteFilter = new MathTrainer.RoundButton();
+            this.buttonEditFilter = new MathTrainer.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.labelAboutFiltr = new System.Windows.Forms.TextBox();
+            this.checkBoxUseFiler = new MathTrainer.Toggle();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownN)).BeginInit();
@@ -187,25 +187,25 @@
             this.LabelFunction.Text = "Функция (Вид примера)";
             this.LabelFunction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox1
+            // comboBoxOperations
             // 
-            this.comboBox1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBox1.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBoxOperations.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.comboBoxOperations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxOperations.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.comboBoxOperations.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxOperations.FormattingEnabled = true;
+            this.comboBoxOperations.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.comboBoxOperations.Items.AddRange(new object[] {
             " 1) Сложение:        a + b",
             " 2) Вычитание:      a - b",
             " 3) Умножение:     a * b",
             " 4) Деление:         a / b",
             " 5) Степень:          a^n",
             " 6) Корень:           a^(1/n)"});
-            this.comboBox1.Location = new System.Drawing.Point(217, 78);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(290, 31);
-            this.comboBox1.TabIndex = 8;
+            this.comboBoxOperations.Location = new System.Drawing.Point(217, 78);
+            this.comboBoxOperations.Name = "comboBoxOperations";
+            this.comboBoxOperations.Size = new System.Drawing.Size(290, 31);
+            this.comboBoxOperations.TabIndex = 8;
             // 
             // labelNum1
             // 
@@ -355,16 +355,16 @@
             0,
             0});
             // 
-            // checkBoxUseFiler
+            // labelShowFilters
             // 
-            this.checkBoxUseFiler.BackColor = System.Drawing.SystemColors.Info;
-            this.checkBoxUseFiler.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBoxUseFiler.Location = new System.Drawing.Point(516, 140);
-            this.checkBoxUseFiler.Name = "checkBoxUseFiler";
-            this.checkBoxUseFiler.Size = new System.Drawing.Size(293, 35);
-            this.checkBoxUseFiler.TabIndex = 25;
-            this.checkBoxUseFiler.Text = "Использовать фильтры";
-            this.checkBoxUseFiler.UseVisualStyleBackColor = false;
+            this.labelShowFilters.BackColor = System.Drawing.SystemColors.Window;
+            this.labelShowFilters.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelShowFilters.Location = new System.Drawing.Point(516, 141);
+            this.labelShowFilters.Name = "labelShowFilters";
+            this.labelShowFilters.Size = new System.Drawing.Size(293, 35);
+            this.labelShowFilters.TabIndex = 38;
+            this.labelShowFilters.Text = "Включить фильтры";
+            this.labelShowFilters.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBoxFilter
             // 
@@ -413,17 +413,6 @@
             this.buttonEditFilter.UseVisualStyleBackColor = false;
             this.buttonEditFilter.Visible = false;
             // 
-            // buttonConfirm
-            // 
-            this.buttonConfirm.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConfirm.Location = new System.Drawing.Point(663, 362);
-            this.buttonConfirm.Name = "buttonConfirm";
-            this.buttonConfirm.Size = new System.Drawing.Size(147, 39);
-            this.buttonConfirm.TabIndex = 30;
-            this.buttonConfirm.Text = "Подтвердить";
-            this.buttonConfirm.UseVisualStyleBackColor = true;
-            this.buttonConfirm.Visible = false;
-            // 
             // labelAboutFiltr
             // 
             this.labelAboutFiltr.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -437,18 +426,30 @@
             this.labelAboutFiltr.TabIndex = 36;
             this.labelAboutFiltr.Visible = false;
             // 
+            // checkBoxUseFiler
+            // 
+            this.checkBoxUseFiler.BackColor = System.Drawing.SystemColors.Window;
+            this.checkBoxUseFiler.Font = new System.Drawing.Font("TF2 Secondary", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxUseFiler.Location = new System.Drawing.Point(521, 144);
+            this.checkBoxUseFiler.Name = "checkBoxUseFiler";
+            this.checkBoxUseFiler.Padding = new System.Windows.Forms.Padding(6);
+            this.checkBoxUseFiler.Size = new System.Drawing.Size(74, 29);
+            this.checkBoxUseFiler.TabIndex = 41;
+            this.checkBoxUseFiler.Text = "Использовать фильтры";
+            this.checkBoxUseFiler.UseVisualStyleBackColor = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(822, 598);
+            this.Controls.Add(this.checkBoxUseFiler);
+            this.Controls.Add(this.labelShowFilters);
             this.Controls.Add(this.labelAboutFiltr);
-            this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.buttonEditFilter);
             this.Controls.Add(this.buttonDeleteFilter);
             this.Controls.Add(this.buttonNewFilter);
             this.Controls.Add(this.comboBoxFilter);
-            this.Controls.Add(this.checkBoxUseFiler);
             this.Controls.Add(this.numericUpDownN);
             this.Controls.Add(this.numericUpDownM);
             this.Controls.Add(this.labelNum10);
@@ -461,7 +462,7 @@
             this.Controls.Add(this.labelNum3);
             this.Controls.Add(this.labelNum2);
             this.Controls.Add(this.labelNum1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxOperations);
             this.Controls.Add(this.LabelFunction);
             this.Controls.Add(this.LabelN);
             this.Controls.Add(this.LabelM);
@@ -496,7 +497,7 @@
         private System.Windows.Forms.Label LabelM;
         private System.Windows.Forms.Label LabelN;
         private System.Windows.Forms.Label LabelFunction;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxOperations;
         private System.Windows.Forms.Label labelNum1;
         private System.Windows.Forms.Label labelNum2;
         private System.Windows.Forms.Label labelNum3;
@@ -509,15 +510,15 @@
         private System.Windows.Forms.Label labelNum10;
         private System.Windows.Forms.NumericUpDown numericUpDownM;
         private System.Windows.Forms.NumericUpDown numericUpDownN;
-        private System.Windows.Forms.CheckBox checkBoxUseFiler;
         private System.Windows.Forms.ComboBox comboBoxFilter;
-        private System.Windows.Forms.Button buttonNewFilter;
-        private System.Windows.Forms.Button buttonDeleteFilter;
-        private System.Windows.Forms.Button buttonEditFilter;
-        private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonNotes;
         private System.Windows.Forms.TextBox labelAboutFiltr;
+        private RoundButton buttonNewFilter;
+        private RoundButton buttonDeleteFilter;
+        private RoundButton buttonEditFilter;
+        private System.Windows.Forms.Label labelShowFilters;
+        private Toggle checkBoxUseFiler;
     }
 }
 

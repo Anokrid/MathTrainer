@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathTrainer.BL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -203,7 +204,7 @@ namespace MathTrainer
             if (_isEditForm)
             {
                 Text = "Редактирование фильтра";
-                Icon = new Icon("../Resource/Icons/Edit.ico");
+                Icon = IconsLoader.GetIconEditPath();
                 _filterIndex = _mainForm.CurrentFilterIndex;
                 LoadFilterData(_mainForm.CurrentFilter);
             }

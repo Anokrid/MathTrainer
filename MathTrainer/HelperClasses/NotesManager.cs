@@ -12,7 +12,7 @@ namespace MathTrainer
         /// <summary>
         /// Путь к файлу с заметками
         /// </summary>
-        private static readonly string NotesFileName = "../Resource/notes.json";
+        private static readonly string NotesFileName = "\\Resources\\notes.json";
 
         /// <summary>
         /// Загрузить список сохранённых заметок
@@ -21,9 +21,14 @@ namespace MathTrainer
         public static List<Note> LoadNotes()
         {
             var notes = new List<Note>();
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Note>));
+            string path = DirectoryManager.TryToFindValidPathToFile(NotesFileName);
+            if (!File.Exists(path))
+            {
+                return notes;
+            }
 
-            using (FileStream fs = new FileStream(NotesFileName, FileMode.Open))
+            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Note>));
+            using (FileStream fs = new FileStream(path, FileMode.Open))
             {
                 notes = (List<Note>)jsonFormatter.ReadObject(fs);
             }
@@ -37,8 +42,10 @@ namespace MathTrainer
         /// <param name="notes">Список заметок</param>
         public static void SaveNotes(List<Note> notes)
         {
+            string path = DirectoryManager.TryToFindValidPathToFile(NotesFileName);
+            
             DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<Note>));
-            using (FileStream fs = new FileStream(NotesFileName, FileMode.Create))
+            using (FileStream fs = new FileStream(path, FileMode.Create))
             {
                 jsonFormatter.WriteObject(fs, notes);
             }

@@ -45,7 +45,7 @@
             this.numericUpDownExamples = new System.Windows.Forms.NumericUpDown();
             this.labelBackGround = new System.Windows.Forms.Label();
             this.comboBoxImages = new System.Windows.Forms.ComboBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.previewBox = new System.Windows.Forms.PictureBox();
             this.labelSizeImage = new System.Windows.Forms.Label();
             this.radioButtonYes = new System.Windows.Forms.RadioButton();
             this.radioButtonNo = new System.Windows.Forms.RadioButton();
@@ -57,7 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMainFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamplesFont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamples)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesFont)).BeginInit();
             this.SuspendLayout();
             // 
@@ -267,16 +267,16 @@
             this.comboBoxImages.Size = new System.Drawing.Size(320, 31);
             this.comboBoxImages.TabIndex = 12;
             // 
-            // pictureBox1
+            // previewBox
             // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(468, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(320, 180);
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.previewBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("previewBox.BackgroundImage")));
+            this.previewBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.previewBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.previewBox.Location = new System.Drawing.Point(468, 78);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(320, 180);
+            this.previewBox.TabIndex = 13;
+            this.previewBox.TabStop = false;
             // 
             // labelSizeImage
             // 
@@ -404,7 +404,7 @@
             this.Controls.Add(this.radioButtonNo);
             this.Controls.Add(this.radioButtonYes);
             this.Controls.Add(this.labelSizeImage);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.previewBox);
             this.Controls.Add(this.comboBoxImages);
             this.Controls.Add(this.labelBackGround);
             this.Controls.Add(this.numericUpDownExamples);
@@ -427,7 +427,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMainFont)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamplesFont)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownExamples)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNotesFont)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -449,7 +449,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownExamples;
         private System.Windows.Forms.Label labelBackGround;
         private System.Windows.Forms.ComboBox comboBoxImages;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox previewBox;
         private System.Windows.Forms.Label labelSizeImage;
         private System.Windows.Forms.RadioButton radioButtonYes;
         private System.Windows.Forms.RadioButton radioButtonNo;

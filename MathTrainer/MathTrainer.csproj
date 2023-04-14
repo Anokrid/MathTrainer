@@ -35,6 +35,26 @@
   <PropertyGroup>
     <ApplicationIcon>JustIcon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,77 +70,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutProgrammForm.cs">
+    <Compile Include="Enums\ChildForm.cs" />
+    <Compile Include="Forms\AboutProgrammForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutProgrammForm.Designer.cs">
+    <Compile Include="Forms\AboutProgrammForm.Designer.cs">
       <DependentUpon>AboutProgrammForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilterEditForm.cs">
+    <Compile Include="Forms\FilterEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FilterEditForm.Designer.cs">
+    <Compile Include="Forms\FilterEditForm.Designer.cs">
       <DependentUpon>FilterEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperClasses\BackgroundManager.cs" />
     <Compile Include="HelperClasses\FontSetter.cs" />
     <Compile Include="HelperClasses\FilterEventArgs.cs" />
+    <Compile Include="HelperClasses\IconsLoader.cs" />
     <Compile Include="HelperClasses\NotesManager.cs" />
     <Compile Include="HelperClasses\SettingsManager.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainPresenter.cs" />
     <Compile Include="HelperClasses\Notes.cs" />
-    <Compile Include="NotesEditForm.cs">
+    <Compile Include="Forms\NotesEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotesEditForm.Designer.cs">
+    <Compile Include="Forms\NotesEditForm.Designer.cs">
       <DependentUpon>NotesEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NotesForm.cs">
+    <Compile Include="Forms\NotesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NotesForm.Designer.cs">
+    <Compile Include="Forms\NotesForm.Designer.cs">
       <DependentUpon>NotesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\RoundButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\Toggle.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QuestionForm.cs">
+    <Compile Include="Forms\QuestionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QuestionForm.Designer.cs">
+    <Compile Include="Forms\QuestionForm.Designer.cs">
       <DependentUpon>QuestionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperClasses\Settings.cs" />
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="VersionForm.cs">
+    <Compile Include="Forms\VersionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="VersionForm.Designer.cs">
+    <Compile Include="Forms\VersionForm.Designer.cs">
       <DependentUpon>VersionForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AboutProgrammForm.resx">
+    <EmbeddedResource Include="Forms\AboutProgrammForm.resx">
       <DependentUpon>AboutProgrammForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FilterEditForm.resx">
+    <EmbeddedResource Include="Forms\FilterEditForm.resx">
       <DependentUpon>FilterEditForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotesEditForm.resx">
+    <EmbeddedResource Include="Forms\NotesEditForm.resx">
       <DependentUpon>NotesEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotesForm.resx">
+    <EmbeddedResource Include="Forms\NotesForm.resx">
       <DependentUpon>NotesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -133,13 +164,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="QuestionForm.resx">
+    <EmbeddedResource Include="Forms\QuestionForm.resx">
       <DependentUpon>QuestionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VersionForm.resx">
+    <EmbeddedResource Include="Forms\VersionForm.resx">
       <DependentUpon>VersionForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -163,6 +194,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="JustIcon.ico" />
+    <Content Include="Resources\Backgrounds\0.jpg" />
+    <Content Include="Resources\Backgrounds\1.jpg" />
+    <Content Include="Resources\Backgrounds\2.jpg" />
+    <Content Include="Resources\Backgrounds\3.jpg" />
+    <Content Include="Resources\Backgrounds\4.jpg" />
+    <Content Include="Resources\Backgrounds\5.jpg" />
+    <Content Include="Resources\Backgrounds\6.jpg" />
+    <Content Include="Resources\Backgrounds\7.jpg" />
+    <Content Include="Resources\Icons\Edit.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

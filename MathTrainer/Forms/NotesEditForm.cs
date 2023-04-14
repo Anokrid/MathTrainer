@@ -37,8 +37,8 @@ namespace MathTrainer
             InitializeComponent();
             if (isEdit)
             {
-                Text = "Изменение заметки";
-                Icon = new Icon("../Resource/Icons/Edit.ico");
+                Text = "Редактирование заметки";
+                Icon = IconsLoader.GetIconEditPath();
                 FillText();
             }
 

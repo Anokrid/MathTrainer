@@ -13,7 +13,7 @@ namespace MathTrainer.BL
         /// <summary>
         /// Имя файла, в котором хранятся фильтры
         /// </summary>
-        private string _fileName = "../Resource/filters.json";
+        private string _fileName = "\\Resources\\filters.json";
 
         /// <summary>
         /// Список доступных фильтров, применяемых к числам А и В
@@ -63,8 +63,11 @@ namespace MathTrainer.BL
         /// </summary>
         public void LoadFilters()
         {
+            string path = DirectoryManager.TryToFindValidPathToFile(_fileName);
+            if (!File.Exists(path)) return;
+            
             var jsonFormatter = new DataContractJsonSerializer(typeof(List<Filter>));
-            using (FileStream fs = new FileStream(_fileName, FileMode.Open))
+            using (FileStream fs = new FileStream(path, FileMode.Open))
             {
                 _possibleFilters = (List<Filter>)jsonFormatter.ReadObject(fs);
             }
@@ -75,8 +78,11 @@ namespace MathTrainer.BL
         /// </summary>
         public void SaveNewFilters()
         {
+            string path = DirectoryManager.TryToFindValidPathToFile(_fileName);
+            if (!File.Exists(path)) return;
+
             var jsonFormatter = new DataContractJsonSerializer(typeof(List<Filter>));
-            using (FileStream fs = new FileStream(_fileName, FileMode.Create))
+            using (FileStream fs = new FileStream(path, FileMode.Create))
             {
                 jsonFormatter.WriteObject(fs, _possibleFilters);
             }

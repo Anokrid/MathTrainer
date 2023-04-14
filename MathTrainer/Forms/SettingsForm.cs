@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathTrainer.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -164,22 +165,11 @@ namespace MathTrainer
         /// </summary>
         private void BackrgoundImageChanged(object sender, EventArgs e)
         {
-            try
-            {
-                int newBackgroundId = comboBoxImages.SelectedIndex;
-                string imageName = "../Resource/Backgrounds/" + newBackgroundId + ".jpg";
-                _settings.BackgroundId = newBackgroundId;
+            int newBackgroundId = comboBoxImages.SelectedIndex;
+            _settings.BackgroundId = newBackgroundId;
 
-                Image newBackground = Image.FromFile(imageName);
-                pictureBox1.BackgroundImage = newBackground;
-                _mainForm.BackgroundImage = newBackground;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-            }
-            catch
-            {
-                MessageBox.Show("Не удаётся обнаружить задний фон с указанным ID, вероятнее всего указанный файл был удалён", "Файл отсутсвует!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            previewBox.BackgroundImage = BackgroundManager.GetBackground(newBackgroundId);
+            _mainForm.BackgroundImage = previewBox.BackgroundImage;
         }
 
         #endregion
@@ -216,9 +206,8 @@ namespace MathTrainer
 
             // Задний фон
             comboBoxImages.SelectedIndex = _settings.BackgroundId;
-            string imageName = "../Resource/Backgrounds/" + _settings.BackgroundId + ".jpg";
-            pictureBox1.BackgroundImage = Image.FromFile(imageName);
-            _mainForm.BackgroundImage = Image.FromFile(imageName);
+            previewBox.BackgroundImage = BackgroundManager.GetBackground(_settings.BackgroundId);
+            _mainForm.BackgroundImage = previewBox.BackgroundImage;
             radioButtonYes.Checked = _settings.StretchBackground;
             radioButtonNo.Checked = !_settings.StretchBackground;
             _mainForm.BackgroundImageLayout = _settings.StretchBackground ? ImageLayout.Stretch : ImageLayout.Tile;

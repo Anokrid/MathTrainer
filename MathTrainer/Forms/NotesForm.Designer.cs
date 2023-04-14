@@ -35,11 +35,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotesForm));
             this.labelNames = new System.Windows.Forms.Label();
             this.comboBoxNames = new System.Windows.Forms.ComboBox();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonEdit = new System.Windows.Forms.Button();
+            this.buttonDelete = new MathTrainer.RoundButton();
+            this.buttonEdit = new MathTrainer.RoundButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.labelNote = new System.Windows.Forms.TextBox();
+            this.buttonAdd = new MathTrainer.RoundButton();
             this.SuspendLayout();
             // 
             // labelNames
@@ -64,18 +64,6 @@
             this.comboBoxNames.Name = "comboBoxNames";
             this.comboBoxNames.Size = new System.Drawing.Size(234, 377);
             this.comboBoxNames.TabIndex = 1;
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAdd.BackColor = System.Drawing.SystemColors.Info;
-            this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
-            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAdd.Location = new System.Drawing.Point(462, 12);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(80, 80);
-            this.buttonAdd.TabIndex = 2;
-            this.buttonAdd.UseVisualStyleBackColor = false;
             // 
             // buttonDelete
             // 
@@ -116,6 +104,17 @@
             this.labelNote.Size = new System.Drawing.Size(479, 332);
             this.labelNote.TabIndex = 9;
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
+            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAdd.Location = new System.Drawing.Point(463, 11);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(80, 80);
+            this.buttonAdd.TabIndex = 10;
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            // 
             // NotesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -123,10 +122,10 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(752, 453);
+            this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.labelNote);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.buttonDelete);
-            this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.comboBoxNames);
             this.Controls.Add(this.labelNames);
             this.DoubleBuffered = true;
@@ -142,10 +141,10 @@
 
         private System.Windows.Forms.Label labelNames;
         private System.Windows.Forms.ComboBox comboBoxNames;
-        private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox labelNote;
+        private RoundButton buttonAdd;
+        private RoundButton buttonDelete;
+        private RoundButton buttonEdit;
     }
 }
